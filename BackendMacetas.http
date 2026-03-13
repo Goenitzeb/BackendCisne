@@ -1,0 +1,6 @@
+@BackendMacetas_HostAddress = http://localhost:5090
+
+GET {{BackendMacetas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
