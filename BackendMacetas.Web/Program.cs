@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using BackendMacetas.Data;
+using BackendMacetas.Database.Data;
+using BackendMacetas.Contracts.Data;
+using BackendMacetas.Contracts.Services;
+using BackendMacetas.Business.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,10 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(ICollectionGetter<>), typeof(CollectionGetter<>));
+builder.Services.AddScoped(typeof(IGetter<>), typeof(Getter<>));
 
 var app = builder.Build();
 
