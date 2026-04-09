@@ -1,17 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using BackendMacetas.Contracts.Services;
 using BackendMacetas.Contracts.Data;
+using BackendMacetas.Contracts.Data.Models.Views;
 
 [ApiController]
 [Route("api/[controller]/maceta")]
 public class MacetasController(
-    ICollectionGetter<Maceta> collectionGetter,
+    ICollectionGetter<ListadoMacetasView> collectionGetter,
     IGetter<Maceta> getter,
     IRepository<Maceta> repository) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Maceta))]
-    public async Task<IEnumerable<Maceta>> Get()
+    public async Task<IEnumerable<ListadoMacetasView>> Get()
     {
         return await collectionGetter.GetAllAsync();
     }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BackendMacetas.Contracts.Data;
+using BackendMacetas.Contracts.Data.Models.Views;
 
 namespace BackendMacetas.Database.Data;
 
@@ -43,6 +44,11 @@ public class AppDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Nombre).IsRequired().HasMaxLength(100);
         });
+
+        modelBuilder.Entity<ListadoMacetasView>(entity =>
+        {
+            entity.ToView("ListadoMacetasView");
+        });
     }
 
     public DbSet<Maceta> Macetas { get; set; }
@@ -54,4 +60,6 @@ public class AppDbContext : DbContext
     public DbSet<Modelo> Modelos { get; set; }
 
     public DbSet<Tamano> Tamanos { get; set; }
+
+    public DbSet<ListadoMacetasView> ListadoMacetas { get; set; }
 }
