@@ -28,3 +28,4 @@ publish/
 
 # NuGet packages
 *.nupkg
+BackendMacetas.Web/appsettings.json
