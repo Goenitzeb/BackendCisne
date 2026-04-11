@@ -6,11 +6,11 @@ using BackendMacetas.Contracts.Data.Models.Views;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ColorController(ICollectionGetter<ListadoColorViews> collectionGetter) : ControllerBase
+public class ColorController(ICollectionGetter<ListadoColorView> collectionGetter) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IEnumerable<ListadoColorViews>> GetColores()
+    public async Task<IEnumerable<ListadoColorView>> GetColores()
     {
         return await collectionGetter.GetAllAsync();
     }
