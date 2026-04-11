@@ -3,7 +3,7 @@ using BackendMacetas.Contracts.Services;
 using BackendMacetas.Contracts.Data;
 
 [ApiController]
-[Route("api/[controller]/tamano")]
+[Route("api/[controller]")]
 public class TamanoController(ICollectionGetter<Tamano> getter) : ControllerBase
 {
     [HttpGet]

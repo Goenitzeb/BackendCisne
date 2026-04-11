@@ -4,7 +4,7 @@ using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
 
 [ApiController]
-[Route("api/[controller]/maceta")]
+[Route("api/[controller]")]
 public class MacetasController(
     ICollectionGetter<ListadoMacetasView> collectionGetter,
     IGetter<Maceta> getter,

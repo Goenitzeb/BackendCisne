@@ -3,7 +3,7 @@ using BackendMacetas.Contracts.Services;
 using BackendMacetas.Contracts.Data;
 
 [ApiController]
-[Route("api/[controller]/color")]
+[Route("api/[controller]")]
 public class ColorController(ICollectionGetter<Color> collectionGetter) : ControllerBase
 {
     [HttpGet]
