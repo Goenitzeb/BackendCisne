@@ -49,6 +49,11 @@ public class AppDbContext : DbContext
         {
             entity.ToView("ListadoMacetasView");
         });
+
+        modelBuilder.Entity<ListadoColorViews>(entity =>
+        {
+            entity.ToView("ListadoColorView");
+        });
     }
 
     public DbSet<Maceta> Macetas { get; set; }
@@ -62,4 +67,6 @@ public class AppDbContext : DbContext
     public DbSet<Tamano> Tamanos { get; set; }
 
     public DbSet<ListadoMacetasView> ListadoMacetas { get; set; }
+
+    public DbSet<ListadoColorViews> ListadoColores { get; set; }
 }
