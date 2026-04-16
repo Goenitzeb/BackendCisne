@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendMacetas.Contracts", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendMacetas.Database", "BackendMacetas.Database\BackendMacetas.Database.csproj", "{72D2815D-082F-FECA-38BF-EC79B0FE7840}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendMacetas.Migrations", "BackendMacetas.Migrations\BackendMacetas.Migrations.csproj", "{851E9A8C-DC39-4630-B01F-82AFA0175662}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{72D2815D-082F-FECA-38BF-EC79B0FE7840}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72D2815D-082F-FECA-38BF-EC79B0FE7840}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72D2815D-082F-FECA-38BF-EC79B0FE7840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{851E9A8C-DC39-4630-B01F-82AFA0175662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{851E9A8C-DC39-4630-B01F-82AFA0175662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{851E9A8C-DC39-4630-B01F-82AFA0175662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{851E9A8C-DC39-4630-B01F-82AFA0175662}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
