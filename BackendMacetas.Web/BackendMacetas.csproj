@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,6 +25,10 @@
     <ProjectReference Include="..\BackendMacetas.Business\BackendMacetas.Business.csproj" />
     <ProjectReference Include="..\BackendMacetas.Contracts\BackendMacetas.Contracts.csproj" />
     <ProjectReference Include="..\BackendMacetas.Database\BackendMacetas.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BindingModels\" />
   </ItemGroup>
 
 </Project>

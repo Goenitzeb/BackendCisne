@@ -28,6 +28,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(ICollectionGetter<>), typeof(CollectionGetter<>));
 builder.Services.AddScoped(typeof(IGetter<>), typeof(Getter<>));
+builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
