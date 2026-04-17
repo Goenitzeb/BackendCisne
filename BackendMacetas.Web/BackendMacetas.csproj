@@ -27,8 +27,4 @@
     <ProjectReference Include="..\BackendMacetas.Database\BackendMacetas.Database.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BindingModels\" />
-  </ItemGroup>
-
 </Project>
