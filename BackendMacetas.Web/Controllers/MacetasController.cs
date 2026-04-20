@@ -47,14 +47,13 @@ public class MacetasController(
 
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Maceta maceta)
+    public async Task<IActionResult> Put(int id, MacetaDTO bindingModel)
     {
-        if (id != maceta.Id)
-            return BadRequest();
+        var maceta = mapper.Map<Maceta>(bindingModel);  
 
         await repository.UpdateAsync(maceta);
 
-        return NoContent();
+        return Ok(maceta);
     }
 
     [HttpGet("{id}")]
