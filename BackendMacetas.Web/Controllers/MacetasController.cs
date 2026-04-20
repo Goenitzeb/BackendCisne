@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using BackendMacetas.Contracts.Services;
-using BackendMacetas.Contracts.Data;
+using AutoMapper.Execution;
 using BackendMacetas.BindingModels;
+using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
+using BackendMacetas.Contracts.Services;
+using Microsoft.AspNetCore.Mvc;
 
 
 [ApiController]
@@ -49,7 +50,9 @@ public class MacetasController(
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, MacetaDTO bindingModel)
     {
-        var maceta = mapper.Map<Maceta>(bindingModel);  
+        var maceta = mapper.Map<Maceta>(bindingModel);
+
+        maceta.Id = id;
 
         await repository.UpdateAsync(maceta);
 

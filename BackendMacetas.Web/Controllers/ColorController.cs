@@ -3,7 +3,7 @@ using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
 using BackendMacetas.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper; 
+using AutoMapper;
 
 
 [ApiController]
@@ -14,7 +14,7 @@ public class ColorController(
     IRepository<Color> repository,
     IMapper mapper) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet, ActionName("ColorGet")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<ListadoColorView>> GetColores()
     {
@@ -26,8 +26,35 @@ public class ColorController(
     {
         var color = mapper.Map<Color>(bindinModel);
 
-        await repository.CreateAsync(color); 
+        await repository.CreateAsync(color);
 
-        return CreatedAtAction(nameof(Get), new { id = color.Id }, color);
+        return CreatedAtAction("ColorGet", new { id = color.Id }, color);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, ColorDTO bindingModel)
+    {
+        var color = mapper.Map<Color>(bindingModel);
+
+        color.Id = id;
+
+        await repository.UpdateAsync(color);
+
+        return Ok(color);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await repository.DeleteAsync(id);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+
+        return Ok();
     }
 }
