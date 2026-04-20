@@ -1,6 +1,8 @@
-﻿namespace BackendMacetas.BindingModels;
+﻿using BackendMacetas.Contracts.Data;
 
-public class ColorDTO
+namespace BackendMacetas.BindingModels;
+
+public class ColorDTO 
 {
     public string Nombre { get; set; } = null!;
 }

@@ -14,7 +14,7 @@ public class MacetasController(
     IRepository<Maceta> repository,
     IMapper mapper) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet, ActionName ("MacetasGet")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Maceta))]
     public async Task<IEnumerable<ListadoMacetasView>> Get()
     {
@@ -28,7 +28,7 @@ public class MacetasController(
 
         await repository.CreateAsync(maceta);
 
-        return CreatedAtAction(nameof(Get), new { id = maceta.Id }, maceta);
+        return CreatedAtAction("MacetasGet", new { id = maceta.Id }, maceta);
     }
 
     [HttpDelete("{id}")]

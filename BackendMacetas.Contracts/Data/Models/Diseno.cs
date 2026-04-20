@@ -1,6 +1,6 @@
 namespace BackendMacetas.Contracts.Data;
 
-public class Diseno
+public class Diseno : IEntity
 {
     public int Id { get; set; }
 
