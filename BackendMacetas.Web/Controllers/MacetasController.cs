@@ -1,14 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using BackendMacetas.Contracts.Services;
 using BackendMacetas.Contracts.Data;
+using BackendMacetas.BindingModels;
 using BackendMacetas.Contracts.Data.Models.Views;
+
 
 [ApiController]
 [Route("api/[controller]")]
 public class MacetasController(
     ICollectionGetter<ListadoMacetasView> collectionGetter,
     IGetter<Maceta> getter,
-    IRepository<Maceta> repository) : ControllerBase
+    IRepository<Maceta> repository,
+    IMapper mapper) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Maceta))]
@@ -18,8 +22,10 @@ public class MacetasController(
     }
 
     [HttpPost]
-    public async Task<ActionResult<Maceta>> Post(Maceta maceta)
+    public async Task<ActionResult<Maceta>> Post(MacetaDTO bindinModel)
     {
+        var maceta = mapper.Map<Maceta>(bindinModel);
+
         await repository.CreateAsync(maceta);
 
         return CreatedAtAction(nameof(Get), new { id = maceta.Id }, maceta);
