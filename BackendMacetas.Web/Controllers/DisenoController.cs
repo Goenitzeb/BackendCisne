@@ -1,15 +1,22 @@
-using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using BackendMacetas.Contracts.Data;
-using BackendMacetas.Contracts.Services;
 using BackendMacetas.Contracts.Data.Models.Views;
+using BackendMacetas.Contracts.Services;
+using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DisenoController(ICollectionGetter<ListadoDisenoView> getter) : ControllerBase
+public class DisenoController(
+    ICollectionGetter<ListadoDisenoView> collectionGetter,
+    IGetter<Diseno> getter,
+    IRepository<Diseno> repository,
+    IMapper mapper) : ControllerBase
 {
-    [HttpGet]
-    public async Task<IEnumerable<ListadoDisenoView>> Get()
+    [HttpGet, ActionName("DisenoGet")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IEnumerable<ListadoDisenoView>> GetDisenos()
     {
-        return await getter.GetAllAsync();
+        return await collectionGetter.GetAllAsync();
     }
+
 }
