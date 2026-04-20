@@ -73,13 +73,13 @@ public class AppDbContext : DbContext
 
     public DbSet<Maceta> Macetas { get; set; }
 
-    public DbSet<Color> Colores { get; set; }
+    public DbSet<Color> Color { get; set; }
 
-    public DbSet<Diseno> Disenos { get; set; }
+    public DbSet<Diseno> Diseno { get; set; }
 
-    public DbSet<Modelo> Modelos { get; set; }
+    public DbSet<Modelo> Modelo { get; set; }
 
-    public DbSet<Tamano> Tamanos { get; set; }
+    public DbSet<Tamano> Tamano { get; set; }
 
     public DbSet<ListadoMacetasView> ListadoMacetas { get; set; }
 

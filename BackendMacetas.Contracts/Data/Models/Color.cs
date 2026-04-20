@@ -1,6 +1,6 @@
 namespace BackendMacetas.Contracts.Data;
 
-public class Color
+public class Color : IEntity
 {
     public int Id { get; set; }
 
