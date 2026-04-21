@@ -1,4 +1,3 @@
-using AutoMapper;
 using BackendMacetas.BindingModels;
 using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
@@ -10,24 +9,31 @@ using Microsoft.AspNetCore.Mvc;
 public class ModeloController(
     ICollectionGetter<ListadoModeloView> collectionGetter,
     IGetter<Modelo> getter,
-    IRepository<Modelo> repository,
     IEntityUpdater<ModeloDTO, Modelo> entityUpdater,
-    IMapper mapper) : ControllerBase
+    IEntityCreator<ModeloDTO, Modelo> entityCreator,
+    IEntityDeleter<Modelo> entityDeleter
+    ) : ControllerBase
 {
     [HttpGet, ActionName("ModeloGet")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IEnumerable<ListadoModeloView>> Get()
+    public async Task<IEnumerable<ListadoModeloView>> GetAll()
     {
         return await collectionGetter.GetAllAsync();
+    }
+
+    [HttpGet, ActionName("ModeloGet")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<Modelo>> Get(int id)
+    {
+        return await getter.GetAsync(id);
     }
 
     [HttpPost]
     public async Task<ActionResult<Modelo>> Post(ModeloDTO bindinModel)
     {
-        var modelo = mapper.Map<Modelo>(bindinModel);
+        var entity = entityCreator.CreateAsync(bindinModel);
 
-        await repository.CreateAsync(modelo);
-        return CreatedAtAction("ModeloGet", new { id = modelo.Id }, modelo  );
+        return CreatedAtAction("ModeloGet", new { id = entity.Id }, entity);
     }
 
     [HttpPut("{id}")]
@@ -43,14 +49,14 @@ public class ModeloController(
     {
         try
         {
-            await repository.DeleteAsync(id);
+            await entityDeleter.DeleteAsync(id);
         }
         catch (KeyNotFoundException)
         {
             return NotFound();
         }
 
-        return Ok();
+        return NoContent();
     }
 
 }
