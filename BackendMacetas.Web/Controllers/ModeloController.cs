@@ -29,4 +29,15 @@ public class ModeloController(
         return CreatedAtAction("ModeloGet", new { id = modelo.Id }, modelo  );
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, ModeloDTO bindingModel)
+    {
+        var modelo = mapper.Map<Modelo>(bindingModel);
+
+        modelo.Id = id;
+        await repository.UpdateAsync(modelo);
+
+        return Ok(modelo);
+    }
+
 }
