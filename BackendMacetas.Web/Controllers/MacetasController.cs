@@ -43,7 +43,7 @@ public class MacetasController(
             return NotFound();
         }
 
-        return NoContent();
+        return Ok();
     }
 
 
