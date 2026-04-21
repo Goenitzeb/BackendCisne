@@ -31,6 +31,7 @@ builder.Services.AddScoped(typeof(ICollectionGetter<>), typeof(CollectionGetter<
 builder.Services.AddScoped(typeof(IGetter<>), typeof(Getter<>));
 builder.Services.AddScoped(typeof(IEntityCreator<,>), typeof(EntityCreator<,>));
 builder.Services.AddScoped(typeof(IConverter<,>), typeof(EntityConverter<,>));
+builder.Services.AddScoped(typeof(IEntityUpdater<,>), typeof(EntityUpdater<,>));
 
 builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());
 

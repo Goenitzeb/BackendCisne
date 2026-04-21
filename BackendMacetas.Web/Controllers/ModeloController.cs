@@ -11,6 +11,7 @@ public class ModeloController(
     ICollectionGetter<ListadoModeloView> collectionGetter,
     IGetter<Modelo> getter,
     IRepository<Modelo> repository,
+    IEntityUpdater<ModeloDTO, Modelo> entityUpdater,
     IMapper mapper) : ControllerBase
 {
     [HttpGet, ActionName("ModeloGet")]
@@ -32,12 +33,9 @@ public class ModeloController(
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, ModeloDTO bindingModel)
     {
-        var modelo = mapper.Map<Modelo>(bindingModel);
+        var entity = await entityUpdater.UpdateAsync(id, bindingModel);
 
-        modelo.Id = id;
-        await repository.UpdateAsync(modelo);
-
-        return Ok(modelo);
+        return Ok(entity);
     }
 
     [HttpDelete("{id}")]

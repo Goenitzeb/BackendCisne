@@ -27,4 +27,20 @@ public class TamanoController(
 
         return CreatedAtAction("TamanoGet", new { id = tamano.Id }, tamano);
     }
+
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await repository.DeleteAsync(id);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+
+        return Ok();
+    }
 }
