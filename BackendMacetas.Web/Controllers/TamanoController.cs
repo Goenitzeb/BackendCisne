@@ -1,15 +1,30 @@
-using Microsoft.AspNetCore.Mvc;
-using BackendMacetas.Contracts.Services;
+using AutoMapper;
+using BackendMacetas.BindingModels;
 using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
+using BackendMacetas.Contracts.Services;
+using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TamanoController(ICollectionGetter<ListadoTamanoView> getter) : ControllerBase
+public class TamanoController(
+    ICollectionGetter<ListadoTamanoView> collectionGetter,
+    IEntityCreator<TamanoDTO, Tamano> entityCreator,
+    IGetter<Tamano> getter,
+    IRepository<Tamano> repository,
+    IMapper mapper) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet, ActionName("TamanoGet")]
     public async Task<IEnumerable<ListadoTamanoView>> Get()
     {
-        return await getter.GetAllAsync();
+        return await collectionGetter.GetAllAsync();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Tamano>> Post(TamanoDTO bindinModel)
+    {
+        var tamano = await entityCreator.CreateAsync(bindinModel);
+
+        return CreatedAtAction("TamanoGet", new { id = tamano.Id }, tamano);
     }
 }
