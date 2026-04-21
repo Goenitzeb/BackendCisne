@@ -43,4 +43,20 @@ public class DisenoController(
         return Ok(diseno);
     }
 
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await repository.DeleteAsync(id);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+
+        return Ok();
+    }
+
 }
