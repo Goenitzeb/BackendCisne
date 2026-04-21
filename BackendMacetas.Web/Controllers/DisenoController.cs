@@ -30,4 +30,17 @@ public class DisenoController(
         return CreatedAtAction("DisenoGet", new { id = diseno.Id }, diseno);
     }
 
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, DisenoDTO bindingModel)
+    {
+        var diseno = mapper.Map<Diseno>(bindingModel);
+
+        diseno.Id = id;
+
+        await repository.UpdateAsync(diseno);
+
+        return Ok(diseno);
+    }
+
 }
