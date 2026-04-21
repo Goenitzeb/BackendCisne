@@ -1,5 +1,14 @@
-﻿namespace BackendMacetas.Mapper;
+﻿using AutoMapper;
+using BackendMacetas.BindingModels;
+using BackendMacetas.Contracts.Data;
 
-public class ModeloProfile
+namespace BackendMacetas.Mapper;
+
+public class ModeloProfile : Profile
 {
+    public ModeloProfile()
+    {
+        CreateMap<ModeloDTO, Modelo>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
+    }
 }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using BackendMacetas.BindingModels;
 using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
 using BackendMacetas.Contracts.Services;
@@ -12,9 +13,20 @@ public class ModeloController(
     IRepository<Modelo> repository,
     IMapper mapper) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet, ActionName("ModeloGet")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<ListadoModeloView>> Get()
     {
         return await collectionGetter.GetAllAsync();
     }
+
+    [HttpPost]
+    public async Task<ActionResult<Modelo>> Post(ModeloDTO bindinModel)
+    {
+        var modelo = mapper.Map<Modelo>(bindinModel);
+
+        await repository.CreateAsync(modelo);
+        return CreatedAtAction("ModeloGet", new { id = modelo.Id }, modelo  );
+    }
+
 }
