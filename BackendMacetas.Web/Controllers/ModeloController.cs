@@ -40,4 +40,19 @@ public class ModeloController(
         return Ok(modelo);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await repository.DeleteAsync(id);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+
+        return Ok();
+    }
+
 }
