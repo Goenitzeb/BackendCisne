@@ -3,7 +3,6 @@ using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
 using BackendMacetas.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
 
 
 [ApiController]
@@ -11,36 +10,41 @@ using AutoMapper;
 public class ColorController(
     ICollectionGetter<ListadoColorView> collectionGetter,
     IGetter<Color> getter,
-    IRepository<Color> repository,
-    IMapper mapper) : ControllerBase
+    IEntityCreator<ColorDTO, Color> entityCreator,
+    IEntityUpdater<ColorDTO, Color> entityUpdater,
+    IEntityDeleter<Color> entityDeleter
+    ) : ControllerBase
 {
-    [HttpGet, ActionName("ColorGet")]
+    public const string GetName = "ColorGet";
+
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IEnumerable<ListadoColorView>> GetColores()
+    public async Task<IEnumerable<ListadoColorView>> GetAll()
     {
         return await collectionGetter.GetAllAsync();
+    }
+
+    [HttpGet("{id}"), ActionName(GetName)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<Color>> Get(int id)
+    {
+        return await getter.GetAsync(id);
     }
 
     [HttpPost]
     public async Task<ActionResult<Color>> Post(ColorDTO bindinModel)
     {
-        var color = mapper.Map<Color>(bindinModel);
+        var entity = entityCreator.CreateAsync(bindinModel);
 
-        await repository.CreateAsync(color);
-
-        return CreatedAtAction("ColorGet", new { id = color.Id }, color);
+        return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, ColorDTO bindingModel)
     {
-        var color = mapper.Map<Color>(bindingModel);
+        var entity = await entityUpdater.UpdateAsync(id, bindingModel);
 
-        color.Id = id;
-
-        await repository.UpdateAsync(color);
-
-        return Ok(color);
+        return Ok(entity);
     }
 
     [HttpDelete("{id}")]
@@ -48,13 +52,13 @@ public class ColorController(
     {
         try
         {
-            await repository.DeleteAsync(id);
+            await entityDeleter.DeleteAsync(id);
         }
         catch (KeyNotFoundException)
         {
             return NotFound();
         }
 
-        return Ok();
+        return NoContent();
     }
 }

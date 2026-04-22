@@ -1,4 +1,3 @@
-using AutoMapper;
 using BackendMacetas.BindingModels;
 using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
@@ -11,36 +10,54 @@ public class TamanoController(
     ICollectionGetter<ListadoTamanoView> collectionGetter,
     IEntityCreator<TamanoDTO, Tamano> entityCreator,
     IGetter<Tamano> getter,
-    IRepository<Tamano> repository,
-    IMapper mapper) : ControllerBase
+    IEntityUpdater<TamanoDTO, Tamano> entityUpdater,
+    IEntityDeleter<Tamano> entityDeleter
+    ) : ControllerBase
 {
-    [HttpGet, ActionName("TamanoGet")]
-    public async Task<IEnumerable<ListadoTamanoView>> Get()
+    public const string GetName = "TamanoGet";
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IEnumerable<ListadoTamanoView>> GetAll()
     {
         return await collectionGetter.GetAllAsync();
+    }
+
+    [HttpGet("{id}"), ActionName(GetName)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<Tamano>> Get(int id)
+    {
+        return await getter.GetAsync(id);
     }
 
     [HttpPost]
     public async Task<ActionResult<Tamano>> Post(TamanoDTO bindinModel)
     {
-        var tamano = await entityCreator.CreateAsync(bindinModel);
+        var entity = entityCreator.CreateAsync(bindinModel);
 
-        return CreatedAtAction("TamanoGet", new { id = tamano.Id }, tamano);
+        return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }
 
-    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, TamanoDTO bindingModel)
+    {
+        var entity = await entityUpdater.UpdateAsync(id, bindingModel);
+
+        return Ok(entity);
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
         try
         {
-            await repository.DeleteAsync(id);
+            await entityDeleter.DeleteAsync(id);
         }
         catch (KeyNotFoundException)
         {
             return NotFound();
         }
 
-        return Ok();
+        return NoContent();
     }
 }

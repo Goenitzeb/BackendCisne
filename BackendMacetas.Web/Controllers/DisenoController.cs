@@ -1,4 +1,3 @@
-using AutoMapper;
 using BackendMacetas.BindingModels;
 using BackendMacetas.Contracts.Data;
 using BackendMacetas.Contracts.Data.Models.Views;
@@ -10,53 +9,55 @@ using Microsoft.AspNetCore.Mvc;
 public class DisenoController(
     ICollectionGetter<ListadoDisenoView> collectionGetter,
     IGetter<Diseno> getter,
-    IRepository<Diseno> repository,
-    IMapper mapper) : ControllerBase
+    IEntityCreator<DisenoDTO, Diseno> entityCreator,
+    IEntityUpdater<DisenoDTO, Diseno> entityUpdater,
+    IEntityDeleter<Diseno> entityDeleter
+    ) : ControllerBase
 {
-    [HttpGet, ActionName("DisenoGet")]
+    public const string GetName = "DisenoGet";
+
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IEnumerable<ListadoDisenoView>> GetDisenos()
+    public async Task<IEnumerable<ListadoDisenoView>> GetAll()
     {
         return await collectionGetter.GetAllAsync();
+    }
+
+    [HttpGet("{id}"), ActionName(GetName)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<Diseno>> Get(int id)
+    {
+        return await getter.GetAsync(id);
     }
 
     [HttpPost]
     public async Task<ActionResult<Diseno>> Post(DisenoDTO bindinModel)
     {
-        var diseno = mapper.Map<Diseno>(bindinModel);
+        var entity = entityCreator.CreateAsync(bindinModel);
 
-        await repository.CreateAsync(diseno);
-
-        return CreatedAtAction("DisenoGet", new { id = diseno.Id }, diseno);
+        return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }
-
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, DisenoDTO bindingModel)
     {
-        var diseno = mapper.Map<Diseno>(bindingModel);
+        var entity = await entityUpdater.UpdateAsync(id, bindingModel);
 
-        diseno.Id = id;
-
-        await repository.UpdateAsync(diseno);
-
-        return Ok(diseno);
+        return Ok(entity);
     }
-
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
         try
         {
-            await repository.DeleteAsync(id);
+            await entityDeleter.DeleteAsync(id);
         }
         catch (KeyNotFoundException)
         {
             return NotFound();
         }
 
-        return Ok();
+        return NoContent();
     }
-
 }
