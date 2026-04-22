@@ -14,14 +14,16 @@ public class ModeloController(
     IEntityDeleter<Modelo> entityDeleter
     ) : ControllerBase
 {
-    [HttpGet, ActionName("ModeloGet")]
+    public const string GetName = "ModeloGet";
+
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<ListadoModeloView>> GetAll()
     {
         return await collectionGetter.GetAllAsync();
     }
 
-    [HttpGet, ActionName("ModeloGet")]
+    [HttpGet("{id}"), ActionName(GetName)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<Modelo>> Get(int id)
     {
@@ -33,7 +35,7 @@ public class ModeloController(
     {
         var entity = entityCreator.CreateAsync(bindinModel);
 
-        return CreatedAtAction("ModeloGet", new { id = entity.Id }, entity);
+        return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }
 
     [HttpPut("{id}")]
