@@ -34,7 +34,7 @@ public class ColorController(
     [HttpPost]
     public async Task<ActionResult<Color>> Post(ColorDTO bindinModel)
     {
-        var entity = entityCreator.CreateAsync(bindinModel);
+        var entity = await entityCreator.CreateAsync(bindinModel);
 
         return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }

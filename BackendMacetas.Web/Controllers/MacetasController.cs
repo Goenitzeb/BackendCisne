@@ -33,7 +33,7 @@ public class MacetasController(
     [HttpPost]
     public async Task<ActionResult<Maceta>> Post(MacetaDTO bindinModel)
     {
-        var entity = entityCreator.CreateAsync(bindinModel);
+        var entity = await entityCreator.CreateAsync(bindinModel);
 
         return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }
