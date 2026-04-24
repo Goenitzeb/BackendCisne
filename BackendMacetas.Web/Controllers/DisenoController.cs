@@ -33,7 +33,7 @@ public class DisenoController(
     [HttpPost]
     public async Task<ActionResult<Diseno>> Post(DisenoDTO bindinModel)
     {
-        var entity = entityCreator.CreateAsync(bindinModel);
+        var entity = await entityCreator.CreateAsync(bindinModel);
 
         return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }

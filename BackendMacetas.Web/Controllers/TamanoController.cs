@@ -33,7 +33,7 @@ public class TamanoController(
     [HttpPost]
     public async Task<ActionResult<Tamano>> Post(TamanoDTO bindinModel)
     {
-        var entity = entityCreator.CreateAsync(bindinModel);
+        var entity = await entityCreator.CreateAsync(bindinModel);
 
         return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }

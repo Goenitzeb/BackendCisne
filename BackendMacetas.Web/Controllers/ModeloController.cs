@@ -33,7 +33,7 @@ public class ModeloController(
     [HttpPost]
     public async Task<ActionResult<Modelo>> Post(ModeloDTO bindinModel)
     {
-        var entity = entityCreator.CreateAsync(bindinModel);
+        var entity = await entityCreator.CreateAsync(bindinModel);
 
         return CreatedAtAction(GetName, new { id = entity.Id }, entity);
     }
