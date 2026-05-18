@@ -36,8 +36,25 @@ builder.Services.AddScoped(typeof(IEntityDeleter<>), typeof(EntityDeleter<>));
 
 builder.Services.AddAutoMapper(cfg => { }, AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirBlazor", policy =>
+    {
+        policy.WithOrigins("http://localhost:5100") // <-- El puerto de tu Blazor
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 
 var app = builder.Build();
+
+app.UseCors("PermitirBlazor");
+
+app.MapGet("/api/productos", () => {
+    // Tu lógica de productos aquí
+});
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
